@@ -1,0 +1,95 @@
+#+TITLE: Solution for "Problem D. Travel"
+#+AUTHOR: Brody Montag
+#+DATE: 12-11-2023
+
+* Problem
+  - /Title/: "Homework 3: Problem D - Travel"
+  - /Link/: [[https://vjudge.net/contest/581598/problemPrint/D][Problem D - Travel]]
+  #+begin_quote
+  - /Constraints/:
+    + 2 ≤ N ≤ 8 (N represents the number of cities)
+    + 1 ≤ Tᵢ,ⱼ ≤ 10⁸ (Tᵢ,ⱼ is the travel time between cities i and j, with Tᵢ,ᵢ = 0 and Tᵢ,ⱼ = Tⱼ,ᵢ)
+    + 1 ≤ K ≤ 10⁹ (K is the exact total travel time to find paths for)
+  - /Objective/: To find the number of paths that start at City 1, visit all other cities exactly once, 
+  return to City 1, and have a total travel time exactly equal to K.
+  #+end_quote
+
+* Solution
+  - In this problem, we must dive into the world of permutations, essentially looking for Hamiltonian cycles - trips where 
+  we visit every node (city) once and circle back to where we started. Think of it as a round trip where no city is left 
+  unseen.
+  - As such, I opted for a permutation-based strategy, using a two-dimensional vector, `travelTimes`, 
+  to store information for our output.
+  - The `main` function serves as our launching pad, gathering inputs and calling our logic function. 
+  - Our logic function here is `countExactTimePaths`. This function's objective is to enumerate paths whose total travel time 
+  is equal to our target, K. The `next_permutation` function from the C++ Standard Library is extremely useful for this as it 
+  can generate all possible sequences of city visits. This exhaustive, brute-force approach explores all potential paths, so we 
+  must be mindful of memory/time requirements.
+* Code 
+#+begin_src c++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Counts the number of paths with total travel time exactly K
+int countExactTimePaths(const vector<vector<int>>& travelTimes, int exactTime) {
+    int numCities = travelTimes.size(); // Number of cities
+    vector<int> cityOrder(numCities - 1); // Order of visiting cities, excluding City 1
+    for (int i = 0; i < numCities - 1; i++) {
+        cityOrder[i] = i + 1; // Initialize city order, starting from City 2
+    }
+
+    int pathCount = 0; // Number of valid paths
+    do {
+        int totalTime = travelTimes[0][cityOrder[0]]; // Time from City 1 to the first city in the order
+        // Calculate total travel time for the current city order
+        for (int i = 0; i < numCities - 2; i++) {
+            totalTime += travelTimes[cityOrder[i]][cityOrder[i + 1]];
+        }
+        totalTime += travelTimes[cityOrder[numCities - 2]][0]; // Time to return to City 1
+
+        if (totalTime == exactTime) {
+            pathCount++; // Increment count if total time matches exactTime
+        }
+    } while (next_permutation(cityOrder.begin(), cityOrder.end())); // Generate next city order
+
+    return pathCount;
+}
+
+int main() {
+    // desynchronize I/O to make code faster
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int numCities, targetTime;
+    cin >> numCities >> targetTime;
+
+    vector<vector<int>> travelTimes(numCities, vector<int>(numCities));
+    // Reading the travel time matrix
+    for (int i = 0; i < numCities; i++) {
+        for (int j = 0; j < numCities; j++) {
+            cin >> travelTimes[i][j];
+        }
+    }
+
+    // Outputs the number of paths with total travel time exactly equal to targetTime
+    cout << countExactTimePaths(travelTimes, targetTime) << "\n";
+
+    return 0;
+}
+#+end_src
+* Implementation Details
+  - /Time Complexity/: The time complexity of the solution is O(N! * N), where N is the number of cities.
+  - /Space Complexity/: The space complexity is O(N²), mainly due to the storage of travel times between cities.
+
+* Takeaways
+  - Understanding permutation generation and its application in solving combinatorial problems.
+  - Importance of clear and efficient code structure for readability and maintenance.
+  - Gained insights into optimizing C++ I/O operations for performance in competitive programming.
+
+* Conclusion
+  - This method showcases combinatorial problem-solving techniques which I find very interesting. 
+  - It’s a straightforward yet elegant example of how abstract Computer Science principles can be used to solve real-world challenges.
+
+
