@@ -73,13 +73,13 @@ int main() {
 }
 #+end_src
 * Implementation Details
-  - /Time Complexity/: The time complexity of the solution is O(N! * N), where N is the number of cities.
-  - /Space Complexity/: The space complexity is O(N²), mainly due to the storage of travel times between cities.
+  - /Time Complexity/: O(N! * N), where N is the number of cities.
+  - /Space Complexity/: O(N²), mainly due to the storage of travel times between cities.
 
 * Takeaways
-  - Understanding permutation generation and its application in solving combinatorial problems.
-  - Importance of clear and efficient code structure for readability and maintenance.
-  - Gained insights into optimizing C++ I/O operations for performance in competitive programming.
+  - Better understanding of permutation generation and its application in solving combinatorial problems.
+  - Clarity on the importance of clear and efficient code structure for readability and concision.
+  - Nuanced strategies for optimizing C++ I/O operations in competitive programming.
 
 * Conclusion
   - This method showcases combinatorial problem-solving techniques which I find very interesting. 
