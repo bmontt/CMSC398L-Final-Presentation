@@ -10,21 +10,14 @@
     + 2 ≤ N ≤ 8 (N represents the number of cities)
     + 1 ≤ Tᵢ,ⱼ ≤ 10⁸ (Tᵢ,ⱼ is the travel time between cities i and j, with Tᵢ,ᵢ = 0 and Tᵢ,ⱼ = Tⱼ,ᵢ)
     + 1 ≤ K ≤ 10⁹ (K is the exact total travel time to find paths for)
-  - /Objective/: To find the number of paths that start at City 1, visit all other cities exactly once, 
-  return to City 1, and have a total travel time exactly equal to K.
+  - /Objective/: To find the number of paths that start at City 1, visit all other cities exactly once, return to City 1, and have a total travel time exactly equal to K.
   #+end_quote
 
 * Solution
-  - In this problem, we must dive into the world of permutations, essentially looking for Hamiltonian cycles - trips where 
-  we visit every node (city) once and circle back to where we started. Think of it as a round trip where no city is left 
-  unseen.
-  - As such, I opted for a permutation-based strategy, using a two-dimensional vector, `travelTimes`, 
-  to store information for our output.
+  - In this problem, we must dive into the world of permutations, essentially looking for Hamiltonian cycles - trips where we visit every node (city) once and circle back to where we started. Think of it as a round trip where no city is left unseen.
+  - As such, I opted for a permutation-based strategy, using a two-dimensional vector, `travelTimes`, to store information for our output.
   - The `main` function serves as our launching pad, gathering inputs and calling our logic function. 
-  - Our logic function here is `countExactTimePaths`. This function's objective is to enumerate paths whose total travel time 
-  is equal to our target, K. The `next_permutation` function from the C++ Standard Library is extremely useful for this as it 
-  can generate all possible sequences of city visits. This exhaustive, brute-force approach explores all potential paths, so we 
-  must be mindful of memory/time requirements.
+  - Our logic function here is `countExactTimePaths`. This function's objective is to enumerate paths whose total travel time is equal to our target, K. The `next_permutation` function from the C++ Standard Library is extremely useful for this as it can generate all possible sequences of city visits. This exhaustive, brute-force approach explores all potential paths, so we must be mindful of memory/time requirements.
 * Code 
 #+begin_src c++
 #include <iostream>
